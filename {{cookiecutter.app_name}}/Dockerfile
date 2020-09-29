@@ -86,12 +86,12 @@ RUN yes 2>/dev/null | /opt/android-sdk/tools/bin/sdkmanager --sdk_root=/opt/andr
 
 # Workaround for https://github.com/kivy/buildozer/issues/1144
 RUN touch ~/.android/repositories.cfg
-RUN /opt/android-sdk/tools/bin/sdkmanager --no_https --proxy=http --proxy_host=proxy-web.proxy-dmz.gnc --proxy_port=3128 --sdk_root=/opt/android-sdk "tools"
-RUN /opt/android-sdk/tools/bin/sdkmanager --no_https --proxy=http --proxy_host=proxy-web.proxy-dmz.gnc --proxy_port=3128 --sdk_root=/opt/android-sdk "build-tools;30.0.2"
-RUN /opt/android-sdk/tools/bin/sdkmanager --no_https --proxy=http --proxy_host=proxy-web.proxy-dmz.gnc --proxy_port=3128 --sdk_root=/opt/android-sdk "platforms;android-30"
-RUN /opt/android-sdk/tools/bin/sdkmanager --no_https --proxy=http --proxy_host=proxy-web.proxy-dmz.gnc --proxy_port=3128 --sdk_root=/opt/android-sdk "platform-tools"
-RUN /opt/android-sdk/tools/bin/sdkmanager --no_https --proxy=http --proxy_host=proxy-web.proxy-dmz.gnc --proxy_port=3128 --sdk_root=/opt/android-sdk "patcher;v4"
-RUN /opt/android-sdk/tools/bin/sdkmanager --no_https --proxy=http --proxy_host=proxy-web.proxy-dmz.gnc --proxy_port=3128 --sdk_root=/opt/android-sdk "emulator"
+RUN /opt/android-sdk/tools/bin/sdkmanager --sdk_root=/opt/android-sdk "tools"
+RUN /opt/android-sdk/tools/bin/sdkmanager --sdk_root=/opt/android-sdk "build-tools;30.0.2"
+RUN /opt/android-sdk/tools/bin/sdkmanager --sdk_root=/opt/android-sdk "platforms;android-30"
+RUN /opt/android-sdk/tools/bin/sdkmanager --sdk_root=/opt/android-sdk "platform-tools"
+RUN /opt/android-sdk/tools/bin/sdkmanager --sdk_root=/opt/android-sdk "patcher;v4"
+RUN /opt/android-sdk/tools/bin/sdkmanager --sdk_root=/opt/android-sdk "emulator"
 
 # installs buildozer and dependencies
 RUN pip3 install --upgrade Cython wheel pip virtualenv buildozer toml colorama jinja2 python-for-android kivy

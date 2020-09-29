@@ -29,16 +29,16 @@ ifeq (poetry,$(firstword $(MAKECMDGOALS)))
 endif
 
 build-devbox: # Construction de l'image de dev
-	podman build -t {{cookiecutter.app_name}}-devbox -f Dockerfile.dev .
+	podman build -t {{cookiecutter.app_name | lower}}-devbox -f Dockerfile.dev .
 
 poetry: build-devbox
 	$(call execute_cmd) $(POETRY_ARGS)
 
 distclean: build-buildozer
-	podman run --interactive --tty --rm -v buildozer_home:/home/user/.buildozer  --volume ${CURDIR}:/home/user/hostcwd {{cookiecutter.app_name}}-buildozer distclean
+	podman run --interactive --tty --rm -v buildozer_home:/home/user/.buildozer  --volume ${CURDIR}:/home/user/hostcwd {{cookiecutter.app_name | lower}}-buildozer distclean
 
 build-buildozer: # Construction de l'image de dev
-	podman build -t {{cookiecutter.app_name}}-buildozer -f Dockerfile .
+	podman build -t {{cookiecutter.app_name | lower}}-buildozer -f Dockerfile .
 
 deploy: build-buildozer
 	podman run -it \
@@ -47,16 +47,16 @@ deploy: build-buildozer
 					--volume buildozer_home:/root/.buildozer \
 					--volume gradle_cache:/root/.gradle \
 					--volume ${CURDIR}:/home/user/hostcwd \
-					{{cookiecutter.app_name}}-buildozer android debug deploy run logcat
+					{{cookiecutter.app_name | lower}}-buildozer android debug deploy run logcat
 
 build-ide: # Construction de l'image contenant vscode
-	podman build -t {{cookiecutter.app_name}}-ide -f Dockerfile.ide .
+	podman build -t {{cookiecutter.app_name | lower}}-ide -f Dockerfile.ide .
 
 run-ide: build-ide # Lancement de Vscode
-	podman run -it -p 127.0.0.1:8080:8080 -v "${CURDIR}:/home/coder/project" {{cookiecutter.app_name}}-ide --auth none &
+	podman run -it -p 127.0.0.1:8080:8080 -v "${CURDIR}:/home/coder/project" {{cookiecutter.app_name | lower}}-ide --auth none &
 	xdg-open "http://localhost:8080/?folder=vscode-remote%3A%2F%2Flocalhost%3A8080%2Fhome%2Fcoder%2Fproject" &
 
 
 define execute_cmd
-	podman run -i -v ${CURDIR}:/opt/{{cookiecutter.app_name}} --env-file .env {{cookiecutter.app_name}}-devbox $(1)
+	podman run -i -v ${CURDIR}:/opt/{{cookiecutter.app_name}} --env-file .env {{cookiecutter.app_name | lower}}-devbox $(1)
 endef
