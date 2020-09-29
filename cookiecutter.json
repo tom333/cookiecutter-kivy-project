@@ -1,3 +1,6 @@
 {
-    "app_name": "HelloWorld"
+    "app_name": "HelloWorld",
+    "app_description": "Simple Kivy HelloWorld Application",
+    "full_name": "",
+    "email": ""
 }
